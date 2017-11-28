@@ -1,20 +1,34 @@
-var Todo = require('./models/todo');
+var Task = require('./models/task');
 var User = require('./models/user');
 var config = require('../config/database');
 var jwt = require('jwt-simple');
 // pass passport for configuration
 var passport	= require('passport');
 require('../config/passport')(passport);
+
 function getTodos(res) {
-    Todo.find(function (err, todos) {
+    Task.find(function (err, todos) {
 
         // if there is an error retrieving, send the error. nothing after res.send(err) will execute
         if (err) {
             res.send(err);
         }
 
-        res.json(todos); // return all todos in JSON format
+        res.send({'success': true, 'todos':todos}); // return all todos in JSON format
     });
+};
+
+getToken = function (headers) {
+  if (headers && headers.authorization) {
+    var parted = headers.authorization.split(' ');
+    if (parted.length === 2) {
+      return parted[1];
+    } else {
+      return null;
+    }
+  } else {
+    return null;
+  }
 };
 
 module.exports = function (app) {
@@ -58,17 +72,33 @@ module.exports = function (app) {
     // get all todos
     app.get('/api/todos', function (req, res) {
         // use mongoose to get all todos in the database
-        getTodos(res);
+        var token = getToken(req.headers);
+        if(token && token !== null) {
+          var decoded = jwt.decode(token, config.secret);
+          User.findOne({
+            userName: decoded.userName
+          }, function(err, user) {
+            if (err) throw err;
+
+            if (user) {
+              getTodos(res);
+            } else {
+              return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
+            }
+          });
+        }else {
+          return res.status(403).send({success: false, msg: 'No token provided.'});
+        }
     });
 
     // create todo and send back all todos after creation
     app.post('/api/todos', function (req, res) {
 
         // create a todo, information comes from AJAX request from Angular
-        Todo.create({
+        Task.create({
             text: req.body.text,
             done: false
-        }, function (err, todo) {
+        }, function (err, task) {
             if (err)
                 res.send(err);
 
@@ -80,7 +110,7 @@ module.exports = function (app) {
 
     // delete a todo
     app.delete('/api/todos/:todo_id', function (req, res) {
-        Todo.remove({
+        Task.remove({
             _id: req.params.todo_id
         }, function (err, todo) {
             if (err)

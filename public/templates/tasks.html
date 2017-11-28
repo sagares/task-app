@@ -1,10 +1,8 @@
-<!-- HEADER AND TODO COUNT -->
-<div class="jumbotron text-center">
-  <h1>I'm a Todo-aholic <span class="label label-info">{{ todos.length }}</span></h1>
-</div>
-
 <!-- TODO LIST -->
 <div id="todo-list" class="row" ng-controller="mainController">
+  <div class="logout">
+    <button class="btn btn-danger" ng-click="logout()">Log Out</button>
+  </div>
   <div class="col-sm-4 col-sm-offset-4">
 
     <!-- LOOP OVER THE TODOS IN $scope.todos -->

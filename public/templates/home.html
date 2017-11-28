@@ -2,7 +2,7 @@
   <div class="col-sm-12 col-md-6 login-form">
     <p class="form-text">Already have an account? Log in!</p>
     <div ng-if="isLoginFailure" class="alert alert-danger" role="alert">
-      {{loginFaiulre}}
+      {{loginFailure}}
     </div>
     <form name="loginForm" ng-submit="authenticate(loginForm.$valid)" novalidate>
       <div class="form-group">

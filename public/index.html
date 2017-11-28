@@ -22,10 +22,9 @@
 
 	<!-- SPELLS -->
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-resource.min.js">
-	 </script>
-	 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-route.min.js">
-	</script><!-- load angular -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-resource.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-route.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/ngstorage/0.3.6/ngStorage.min.js"></script><!-- load angular -->
 
 	<script src="js/services/todos.js"></script> <!-- load our todo service -->
 	<script src="js/services/userService.js"></script>
@@ -37,6 +36,13 @@
 <!-- SET THE CONTROLLER -->
 <body>
 	<div class="container">
+		<!-- HEADER -->
+		<div class="row centered-text">
+			<div class="col-md-12 col-sm-12">
+				<img src="images/todo.png" alt="Logo" class="img-rounded" height="75" width="75">
+				<h1>Tasks App</h1>
+			</div>
+		</div>
 		<div ng-view></div>
 	</div>
 </body>
