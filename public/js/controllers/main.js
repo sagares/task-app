@@ -1,16 +1,63 @@
 var app  = angular.module('tasksApp');
 
-app.controller('userController', ['$scope','Users', userController]);
-function userController($scope, Users) {
+app.controller('userController', ['$scope', '$timeout', 'Users', userController]);
+function userController($scope, $timeout, Users) {
 	$scope.user = {};
-	$scope.login = {};
-	$scope.signUp = function() {
-		Users.create($scope.user).then(function(data) {
-			console.log(data);
-		}).error(function(err){
-			console.log(err);
-		});
+	$scope.isSuccess = false;
+	$scope.isFailure =  false;
+
+	$scope.signUp = function(valid) {
+		if(valid) {
+			Users.create($scope.user).then(function(result) {
+				if(result.data.success) {
+					$scope.sucessMessage = result.data.msg;
+					$scope.isSuccess =  true;
+					$timeout(function(){
+						$scope.isSuccess =  false;
+					}, 3000);
+				} else {
+					$scope.failureMessage = result.data.msg;
+					$scope.isFailure =  true;
+					$timeout(function(){
+						$scope.isFailure =  false;
+					}, 3000);
+				}
+			}, function(err){
+				console.log(err);
+			});
+			$timeout(function() {
+      	$scope.signUpForm.$setPristine();
+      	$scope.signUpForm.$setUntouched();
+      	$scope.signUpForm.$submitted = false;
+    	});
+			$scope.resetSignUpForm();
+		};
 	};
+
+	$scope.resetSignUpForm = function() {
+        $scope.user = angular.copy({});
+  };
+
+	$scope.login = {};
+	$scope.isLoginFailure = false;
+	$scope.authenticate = function(valid) {
+		if(valid) {
+			Users.authenticate($scope.login).then(function(result){
+				if(result.data.success) {
+					console.log(result);
+				}else {
+					$scope.isLoginFailure = true;
+					$scope.loginFailure = result.data.msg;
+				}
+			}, function(err){
+				$scope.isLoginFailure = true;
+				$scope.loginFailure = err;
+			});
+			$timeout(function(){
+				$scope.isLoginFailure =  false;
+			}, 3000);
+		}
+	}
 }
 
 // inject the Todo service and user service factory into our controller

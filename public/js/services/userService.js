@@ -6,6 +6,9 @@ angular.module('userService', [])
 		return {
 			create : function(userData) {
 				return $http.post('/api/signup', userData);
+			},
+			authenticate: function(credentials) {
+				return $http.post('/api/authenticate', credentials);
 			}
 		}
 	}]);
