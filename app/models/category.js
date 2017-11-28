@@ -1,8 +1,22 @@
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-module.exports = mongoose.model('Category', {
-    name: {
+// set up a mongoose model
+var CategorySchema = new Schema({
+  users_id: {
         type: String,
-        default: ''
-    }
+        required: true
+  },
+  categoryName: {
+      type: String,
+      unique: true,
+      required: true
+  }
 });
+
+CategorySchema.pre('save', function (next) {
+    var category = this;
+    return next();
+});
+
+mongoose.model('Category', CategorySchema);
