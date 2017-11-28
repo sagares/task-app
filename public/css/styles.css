@@ -1,0 +1,95 @@
+body {
+  background-color: #e9e6ed;
+  color: #404040;
+  margin: 0px;
+}
+
+.centered-text {
+  text-align: center;
+}
+
+.main {
+  margin: 10px auto 10px;
+  padding: 30px 5px;
+  width: 100%;
+  border-radius: 4px;
+  background-color: #fff;
+  -webkit-box-shadow: -1px 1px 4px 0 rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: -1px 1px 4px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: -1px 1px 4px 0 rgba(0, 0, 0, 0.3);
+}
+
+.main-video {
+  width: 100%;
+  height: auto;
+}
+
+.video-title {
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .video-title {
+    color: rgba(255, 255, 255, 0.6);
+    position: relative;
+    top: -230px;
+  }
+}
+
+@media (min-width: 992px) {
+  .video-title {
+    color: rgba(255, 255, 255, 0.6);
+    position: relative;
+    top: -320px;
+  }
+}
+
+.m-t-5 {
+  margin-top: 5%;
+}
+@media (max-width: 768px) {
+  .m-t-5 {
+    margin-top:0px;
+  }
+}
+.main p {
+  text-align: center;
+  font-size: 16px;
+}
+
+.signup-form {
+  border-left: 1px dotted #ddd;
+}
+
+@media (max-width: 768px) {
+  .signup-form {
+    border-left: 0;
+  }
+}
+
+.signup-form form{
+  width: 90%;
+    margin: auto;
+}
+
+@media (max-width: 768px) {
+  .signup-form form {
+    width: 100%;
+  }
+}
+
+.select-country {
+  margin-bottom: 15px;
+}
+.btn-100 {
+  width: 100%;
+}
+
+.btn-100:hover, .btn-100:active {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.help-block {
+  font-size: 10px;
+  color: #d43f3a;
+}

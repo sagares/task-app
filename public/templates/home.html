@@ -1,0 +1,50 @@
+<div class="row main m-t-5" ng-controller="userController">
+  <div class="col-sm-12 col-md-6 login-form">
+    <p class="form-text">Already have an account? Log in!</p>
+    <form name="loginForm" ng-submit="login(loginForm.$valid)" novalidate>
+      <div class="form-group">
+        <input type="text" class="form-control" name="userName" ng-model="login.userName"
+          placeholder="User Name" required aria-label="User Name">
+        <span ng-show="loginForm.userName.$invalid && !loginForm.userName.$pristine"
+          class="help-block"><i class="fa fa-user"></i> Username is required.</span>
+      </div>
+      <div class="form-group">
+        <input type="password" class="form-control" name="password" ng-model="login.password"
+          placeholder="Password" required aria-label="Password">
+        <span ng-show="loginForm.password.$invalid && !loginForm.password.$pristine"
+          class="help-block"><i class="fa fa-lock"></i> Password is required.</span>
+      </div>
+      <div class="form-group">
+        <input type="submit" value="Sign Up" class="btn btn-primary btn-100"
+          ng-disabled="loginForm.$invalid" aria-label="Log In"></button>
+      </div>
+    </form>
+  </div>
+  <div class="col-sm-12 col-md-6 signup-form">
+    <p class="form-text">New User? Sign Up!</p>
+    <form name="signUpForm" ng-submit="signUp(signUpForm.$valid)" novalidate>
+      <div class="form-group">
+        <input type="email" class="form-control" name="email" ng-model="user.email"
+          placeholder="Email address" required aria-label="Email">
+        <span ng-show="signUpForm.email.$invalid && !signUpForm.email.$pristine"
+          class="help-block"><i class="fa fa-envelope"></i> Enter a valid email.</span>
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" name="userName" ng-model="user.userName"
+          placeholder="User Name" required aria-label="User Name">
+        <span ng-show="signUpForm.userName.$invalid && !signUpForm.userName.$pristine"
+          class="help-block"><i class="fa fa-user"></i> Username is required.</span>
+      </div>
+      <div class="form-group">
+        <input type="password" class="form-control" name="password" ng-model="user.password"
+          placeholder="Password" required aria-label="Password">
+        <span ng-show="signUpForm.password.$invalid && !signUpForm.password.$pristine"
+          class="help-block"><i class="fa fa-lock"></i> Password is required.</span>
+      </div>
+      <div class="form-group">
+        <input type="submit" value="Sign Up" class="btn btn-warning btn-100"
+          ng-disabled="signUpForm.$invalid" aria-label="Sign Up"></button>
+      </div>
+    </form>
+  </div>
+</div>

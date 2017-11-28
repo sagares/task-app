@@ -1,0 +1,43 @@
+<!doctype html>
+
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html ng-app="tasksApp">
+<head>
+	<!-- META -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+
+	<title>Tasks App</title>
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<!-- SCROLLS -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/styles.css">
+	<style>
+		html 					{ overflow-y:scroll; }
+		body 					{ padding-top:50px; }
+		#todo-list 				{ margin-bottom:30px; }
+		#todo-form 	 			{ margin-bottom:50px; }
+	</style>
+
+	<!-- SPELLS -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-resource.min.js">
+	 </script>
+	 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-route.min.js">
+	</script><!-- load angular -->
+
+	<script src="js/services/todos.js"></script> <!-- load our todo service -->
+	<script src="js/services/userService.js"></script>
+	<script src="js/core.js"></script> <!-- load our main application -->
+	<script src="js/controllers/main.js"></script> <!-- load up our controller -->
+
+
+</head>
+<!-- SET THE CONTROLLER -->
+<body>
+	<div class="container">
+		<div ng-view></div>
+	</div>
+</body>
+</html>
