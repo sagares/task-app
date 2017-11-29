@@ -1,93 +1,136 @@
-var Task = require('./models/task');
 var User = require('./models/user');
 var config = require('../config/database');
 var jwt = require('jwt-simple');
 // pass passport for configuration
-var passport	= require('passport');
+var passport = require('passport');
 require('../config/passport')(passport);
 
 function getTodos(res) {
-    Task.find(function (err, todos) {
 
-        // if there is an error retrieving, send the error. nothing after res.send(err) will execute
-        if (err) {
-            res.send(err);
-        }
-
-        res.send({'success': true, 'todos':todos}); // return all todos in JSON format
-    });
+    res.send({'success': true, 'todos': []});
 };
 
 getToken = function (headers) {
-  if (headers && headers.authorization) {
-    var parted = headers.authorization.split(' ');
-    if (parted.length === 2) {
-      return parted[1];
+    if (headers && headers.authorization) {
+        var parted = headers.authorization.split(' ');
+        if (parted.length === 2) {
+            return parted[1];
+        } else {
+            return null;
+        }
     } else {
-      return null;
+        return null;
     }
-  } else {
-    return null;
-  }
 };
+
+getUser = function(token, callback) {
+    var decoded = jwt.decode(token, config.secret);
+    User.findOne({
+        userName: decoded.userName
+    }, function (err, user) {
+        callback(err, user);
+    });
+}
 
 module.exports = function (app) {
 
-    app.post('/api/signup', function (req, res){
-      var newUser = new User({
-        userName: req.body.userName,
-        email: req.body.email,
-        password: req.body.password
-      });
+    app.post('/api/signup', function (req, res) {
+        var newUser = new User({
+            userName: req.body.userName,
+            email: req.body.email,
+            password: req.body.password,
+            categories: []
+        });
 
-      newUser.save(function(err) {
-        if (err) {
-          return res.json({success: false, msg: 'Username already exists.'});
-        }
-          res.json({success: true, msg: 'Successful! Created new user. Proceed to login.'});
-      });
-    });
-
-    app.post('/api/authenticate', function(req, res){
-      User.findOne({userName: req.body.userName}, function(err, user){
-        if(err) {
-          throw err;
-        }
-        if(!user)  {
-          res.send({success: false, msg: 'Authentication failed. User not found.'});
-        } else {
-          user.comparePassword(req.body.password, function(err, isMatch){
-            if (isMatch && !err) {
-              // if user is found and password is right create a token
-              var token = jwt.encode(user, config.secret);
-              // return the information including token as JSON
-              res.json({success: true, token: 'JWT ' + token});
-            } else {
-              res.send({success: false, msg: 'Authentication failed. Wrong password.'});
+        newUser.save(function (err) {
+            if (err) {
+                return res.json({success: false, msg: 'Username already exists.'});
             }
-          });
-        }
-      });
+            res.json({success: true, msg: 'Successful! Created new user. Proceed to login.'});
+        });
     });
+
+    app.post('/api/authenticate', function (req, res) {
+        User.findOne({userName: req.body.userName}, function (err, user) {
+            if (err) {
+                throw err;
+            }
+            if (!user) {
+                res.send({success: false, msg: 'Authentication failed. User not found.'});
+            } else {
+                user.comparePassword(req.body.password, function (err, isMatch) {
+                    if (isMatch && !err) {
+                        // if user is found and password is right create a token
+                        var token = jwt.encode(user, config.secret);
+                        // return the information including token as JSON
+                        res.json({success: true, token: 'JWT ' + token});
+                    } else {
+                        res.send({success: false, msg: 'Authentication failed. Wrong password.'});
+                    }
+                });
+            }
+        });
+    });
+
+    app.post('/api/categories', function(req, res) {
+        var token = getToken(req.headers);
+        if (token && token !== null) {
+            getUser(token, function(err, user){
+                if (err) throw err;
+                if (user) {
+                    var found = user.categories.find(function(category){
+                        return category.title === req.body.title;
+                    });
+                    if(found) {
+                        return res.json({success: false, msg: 'Category already present.'});
+                    }
+                    user.categories.push({title: req.body.title, tasks: []});
+                    user.save(function (err) {
+                        if (err) {
+                            return res.json({success: false, msg: 'Error while adding category.'});
+                        }
+                        res.json({success: true, categories: user.categories});
+                    });
+                } else {
+                    return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
+                }
+            });
+        } else {
+            return res.status(403).send({success: false, msg: 'No token provided.'});
+        }
+    });
+
+    app.get('/api/categories', function(req, res) {
+        var token = getToken(req.headers);
+        if(token && token !== null) {
+            getUser(token, function(err, user){
+                if (err) throw err;
+                if (user) {
+                    res.send({success: true, categories: user.categories})
+                } else {
+                    return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
+                }
+            });
+        } else {
+            return res.status(403).send({success: false, msg: 'No token provided.'});
+        }
+    });
+
     // get all todos
     app.get('/api/todos', function (req, res) {
         // use mongoose to get all todos in the database
         var token = getToken(req.headers);
-        if(token && token !== null) {
-          var decoded = jwt.decode(token, config.secret);
-          User.findOne({
-            userName: decoded.userName
-          }, function(err, user) {
-            if (err) throw err;
-
-            if (user) {
-              getTodos(res);
-            } else {
-              return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
-            }
-          });
-        }else {
-          return res.status(403).send({success: false, msg: 'No token provided.'});
+        if (token && token !== null) {
+            getUser(token, function(err, user){
+                if (err) throw err;
+                if (user) {
+                    getTodos(res);
+                } else {
+                    return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
+                }
+            });
+        } else {
+            return res.status(403).send({success: false, msg: 'No token provided.'});
         }
     });
 

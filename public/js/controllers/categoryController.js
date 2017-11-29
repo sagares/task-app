@@ -1,29 +1,49 @@
 var app  = angular.module('tasksApp');
 
 // inject the Todo service and user service factory into our controller
-app.controller('categoryController', ['$scope','$timeout', '$sessionStorage','$location', 'Todos', 'Users', categoryController]);
-function categoryController($scope, $timeout, $sessionStorage, $location, Todos, Users) {
+app.controller('categoryController', ['$scope','$timeout', '$sessionStorage','$location', 'Todos', 'Categories', categoryController]);
+function categoryController($scope, $timeout, $sessionStorage, $location, Todos, Categories) {
     $scope.toggleLoader = false;
     $scope.toggleList = true;
-	$scope.categories = [
-		'Low',
-		'High',
-		'Medium',
-		'a','b','c','d','e','f','g','h','i','j',
-        'aa','bb','cc','dd','ee','ff','gg','hh','ii','jj'
-	];
+
+    $scope.alerts = {
+    	isAlert: false,
+		alreadyExists: ''
+	};
+
+    Categories.get().then(function(result){
+        if(result.data.success) {
+            $scope.categories = result.data.categories;
+        } else {
+            alert('Not authorized. Please Login!');
+            $location.path('/');
+        }
+	}, function(err){
+    	console.log(err);
+	});
 
 	$scope.category = {};
 	$scope.addCategory = function (valid) {
 		if(valid) {
             $scope.toggleLoader = true;
             $scope.toggleList = false;
-            $timeout(function(){
-                $scope.categories.push($scope.category.title);
-                $scope.category = angular.copy({});
-                $scope.toggleLoader = false;
-                $scope.toggleList = true;
-			}, 2000);
+            //call create category method from service
+            Categories.create($scope.category)
+            // if successful creation, call our get function to get all the new categories
+                .then(function(result) {
+                	if(result.data.success) {
+                        $scope.categories = result.data.categories; // assign our new list of todos
+                    } else {
+                        $scope.alerts.alreadyExists = result.data.msg;
+                        $scope.alerts.isAlert =  true;
+                        $timeout(function(){
+                            $scope.alerts.isAlert =  false;
+                        }, 1500);
+					}
+                    $scope.toggleLoader = false;
+                    $scope.toggleList = true;
+                    $scope.category = angular.copy({});
+                });
 		}
     }
 

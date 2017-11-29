@@ -1,4 +1,5 @@
-var app  = angular.module('tasksApp', ['ngRoute', 'ngStorage', 'todoService', 'userService']);
+var app  = angular.module('tasksApp', ['ngRoute', 'ngStorage',
+    'todoService', 'userService', 'categoryService']);
 
 app.config(function($routeProvider, $locationProvider, $httpProvider) {
   $routeProvider.when('/', {
