@@ -4,8 +4,8 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
   $routeProvider.when('/', {
     templateUrl: 'templates/home.html'
   })
-  .when('/tasks', {
-    templateUrl: 'templates/tasks.html'
+  .when('/category', {
+    templateUrl: 'templates/category.html'
   });
 
   $httpProvider.interceptors.push(function($sessionStorage, $location) {
@@ -29,4 +29,21 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
     };
   });
   $locationProvider.hashPrefix('!');
+});
+
+app.directive('addCategory', function(){//add-category
+  var directive = {};
+
+  directive.restrict = 'A';
+  directive.compile = function(element, attributes) {
+      var linkFunction = function($scope, element, attributes) {
+        element[0].addEventListener('click', function(e){
+          var target = e.target;
+
+        });
+      }
+      return linkFunction;
+  }
+
+  return directive;
 });

@@ -1,8 +1,32 @@
 var app  = angular.module('tasksApp');
 
 // inject the Todo service and user service factory into our controller
-app.controller('mainController', ['$scope','$http','$sessionStorage','$location', 'Todos', 'Users', mainController]);
-function mainController($scope, $http, $sessionStorage, $location, Todos, Users) {
+app.controller('categoryController', ['$scope','$timeout', '$sessionStorage','$location', 'Todos', 'Users', categoryController]);
+function categoryController($scope, $timeout, $sessionStorage, $location, Todos, Users) {
+    $scope.toggleLoader = false;
+    $scope.toggleList = true;
+	$scope.categories = [
+		'Low',
+		'High',
+		'Medium',
+		'a','b','c','d','e','f','g','h','i','j',
+        'aa','bb','cc','dd','ee','ff','gg','hh','ii','jj'
+	];
+
+	$scope.category = {};
+	$scope.addCategory = function (valid) {
+		if(valid) {
+            $scope.toggleLoader = true;
+            $scope.toggleList = false;
+            $timeout(function(){
+                $scope.categories.push($scope.category.title);
+                $scope.category = angular.copy({});
+                $scope.toggleLoader = false;
+                $scope.toggleList = true;
+			}, 2000);
+		}
+    }
+
 	$scope.formData = {};
 	$scope.loading = true;
 

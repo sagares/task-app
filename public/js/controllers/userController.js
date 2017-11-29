@@ -52,7 +52,7 @@ function userController($scope, $timeout, $sessionStorage, $location, Users) {
 				//if succesfully logged in store token in session storage and redirect to home
 				if(result.data.success) {
 					$sessionStorage.authToken = result.data.token;
-					$location.path('/tasks');
+					$location.path('/category');
 				}else { //if login unsuccessful display error message
 					$scope.isLoginFailure = true;
 					$scope.loginFailure = result.data.msg;
