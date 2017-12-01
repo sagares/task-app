@@ -101,6 +101,29 @@ body {
 
 .category-block.purple {
   background-color: #633ea5;
+  position: relative;
+}
+
+.category-block h4{
+  display: inline-block;
+}
+
+.icon {
+  display: inline-block;
+  position: absolute;
+  right: 10px;
+  top: 6px;
+  padding: 0px 4px;
+  border-radius: 50%;
+  background-image: linear-gradient(#d43f3a, #d43f3a);
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: 0% 0%;
+  transition: background-size .1s, color .1s;
+}
+
+.icon:hover {
+  background-size: 100% 100%;
 }
 
 .category-block.empty{

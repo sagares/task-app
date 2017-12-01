@@ -11,3 +11,7 @@ E
 public/css/styles.css,c/c/ccef9d2f34fd679a4eef74f96b59af18a3b918cc
 [
 +public/js/controllers/categoryController.js,7/3/7357faf0d59b38e4071db5bdc22288cf59da78ff
+K
+public/js/services/todos.js,8/e/8ef4d0588f36f5c87cb13c0b3f5bed5950386d4c
+U
+%public/js/services/categoryService.js,f/8/f85cd64f615ba34d523b2ee2f860629be0934a3f

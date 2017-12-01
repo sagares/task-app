@@ -10,8 +10,9 @@
         <div id="loader" class="loader" ng-if="toggleLoader"></div>
         <div class="category-board animate-bottom" ng-if="toggleList">
             <div class="col-sm-12 col-md-3" ng-repeat="category in categories">
-                <div class="category-block purple">
+                <div class="category-block purple" ng-click="event.redirectToTasks(this)">
                     <h4>{{category.title}}</h4>
+                    <div class="icon" ng-click="event.deleteCategory(this, $event)"><i class="fa fa-times"></i></div>
                 </div>
             </div>
             <div class="col-sm-12 col-md-3">

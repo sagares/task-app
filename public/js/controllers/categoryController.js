@@ -47,6 +47,17 @@ function categoryController($scope, $timeout, $sessionStorage, $location, Todos,
 		}
     }
 
+    $scope.event = {
+		redirectToTasks: function(){
+			console.log('Category block clicked');
+		},
+		deleteCategory: function(self, e){
+			e.stopPropagation();
+			console.log(self.category);
+			console.log(e);
+			console.log('Deleting');
+		}
+	}
 	$scope.formData = {};
 	$scope.loading = true;
 
