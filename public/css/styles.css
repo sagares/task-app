@@ -19,10 +19,15 @@ body {
   box-shadow: -1px 1px 4px 0 rgba(0, 0, 0, 0.3);
 }
 
-.main h1,  .main h2 {
+.main h1,  .main h2, .main h6{
   margin-top: 0px;
   padding-left: 30px;
   border-bottom: 1px solid #ddd;
+}
+
+.main h6 {
+  color: #888;
+  border-bottom: 0;
 }
 
 .category-board {
@@ -43,6 +48,38 @@ body {
   text-align: center;
   font-size: 16px;
 }
+
+.new-input{
+  border: 0;
+  border-bottom: 1px solid #ddd;
+  outline: none;
+  box-shadow: none;
+  padding-left: 1px;
+  border-radius: 0;
+}
+
+.material-input {
+  content: '';
+  display: block;
+  width: 0%;
+  border-bottom: 2px solid #633ea5;
+  transition: width 250ms ease-out;
+  -webkit-transition: width 250ms ease-out;
+  -moz-transition: width 250ms ease-out;
+}
+
+.form-control:focus {
+  border-color: #fff;
+}
+.new-input:active, .new-input:focus {
+  outline:none;
+  box-shadow: none;
+}
+
+.material-input:hover, .material-input:active, .material-input:focus{
+  width: 100%;
+}
+
 
 .signup-form {
   border-left: 1px dotted #ddd;
@@ -186,4 +223,69 @@ body {
 @keyframes animatebottom {
   from{ bottom:-50px; opacity:0 }
   to{ bottom:0; opacity:1 }
+}
+
+.back-button{
+  margin-bottom: -10px;
+  border-radius: 0;
+  margin-left: 9px;
+  background-color: #633ea5;
+}
+
+.back-button a{
+  color: #fff;
+}
+
+.back-button a:hover {
+  text-decoration: none;
+}
+
+.task-board {
+  height: 400px;
+  overflow-y: scroll;
+}
+
+.task-panel{
+  border-radius: 2px;
+  border: 1px solid #633ea5;
+  color: #fff;
+  margin-top: 10px;
+  padding-bottom: 15px;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.task-panel:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.task-header{
+  padding: 8px;
+  background-color: #633ea5;
+}
+
+.task-header h5 {
+  display: inline-block;
+  width: 90%;
+}
+
+.task-header .icon{
+  position: relative;
+  top: 0;
+}
+
+.task-description{
+  color: #404040;
+  height: auto;
+  padding: 8px;
+}
+
+.task-form {
+  padding: 5px;
+}
+
+.task-form legend {
+  text-align: left;
+  color: #633ea5;
+  border-bottom: 0;
 }

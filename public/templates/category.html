@@ -1,6 +1,6 @@
 <div class="row" ng-controller="categoryController">
     <div ng-if="alerts.isAlert" class="alert alert-danger" role="alert">
-        {{alerts.alreadyExists}}
+        {{alerts.alertMessage}}
     </div>
     <div class="main">
         <div class="logout">
@@ -19,8 +19,9 @@
                 <div class="category-block empty">
                     <form class="form-inline" name="categoryForm" ng-submit="addCategory(categoryForm.$valid)">
                         <div class="form-group">
-                            <input type="text" name="categoryName" class="form-control"
-                                   placeholder="New Category" ng-model="category.title" required>
+                            <input type="text" name="categoryName" class="form-control new-input"
+                                   placeholder="New Category" autocomplete="off" ng-model="category.title" required>
+                            <span class="material-input"></span>
                         </div>
                         <button type="submit" class="btn btn-purple">Add</button>
                     </form>

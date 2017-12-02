@@ -1,5 +1,5 @@
 var app  = angular.module('tasksApp', ['ngRoute', 'ngStorage',
-    'todoService', 'userService', 'categoryService']);
+    'taskService', 'userService', 'categoryService']);
 
 app.config(function($routeProvider, $locationProvider, $httpProvider) {
   $routeProvider.when('/', {
@@ -7,6 +7,12 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
   })
   .when('/category', {
     templateUrl: 'templates/category.html'
+  })
+  .when('/tasks/:id', {
+    templateUrl: 'templates/task.html'
+  })
+  .otherwise({
+      templateUrl: 'templates/error.html'
   });
 
   $httpProvider.interceptors.push(function($sessionStorage, $location) {
@@ -32,15 +38,19 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
   $locationProvider.hashPrefix('!');
 });
 
-app.directive('addCategory', function(){//add-category
+app.directive('materialInput', function(){//add-category
   var directive = {};
 
-  directive.restrict = 'A';
+  directive.restrict = 'C';
   directive.compile = function(element, attributes) {
       var linkFunction = function($scope, element, attributes) {
-        element[0].addEventListener('click', function(e){
-          var target = e.target;
-
+        var parent = element[0].parentNode;
+        var input = parent.querySelector('.form-control');
+        input.addEventListener('focus', function(e){
+            element[0].style.width = '100%';
+        });
+        input.addEventListener('blur', function(e){
+            element[0].style.width = '0%';
         });
       }
       return linkFunction;
