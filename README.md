@@ -1,8 +1,17 @@
 # Tasks App
 
-A Node app built with MongoDB and Angular. For demonstration purposes and a tutorial.
+A MEAN stack app built with MongoDB and Angular for adding deleting tasks into different categories.
 
 Node provides the RESTful API. Angular provides the frontend and accesses the API. MongoDB stores like a hoarder.
+
+Following are the use case covered by the app:
+- Sign in for users
+- New users can sign up
+- After sign in users can create multiple categories.
+- Users can delete category
+- User can add tasks to each category with title and description.
+- Users can delete tasks.
+- Users can logout of their account.
 
 ## Requirements
 
