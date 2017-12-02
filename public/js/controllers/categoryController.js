@@ -54,7 +54,6 @@ function categoryController($scope, $timeout, $sessionStorage, $location, Catego
     //DELETE and REDIRECT ===============================================================
     $scope.event = {
 		redirectToTasks: function(self){
-			console.log(self);
             $location.path('/tasks/'+self.category._id);
 		},
 		deleteCategory: function(self, e){

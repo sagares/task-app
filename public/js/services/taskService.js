@@ -4,14 +4,11 @@ angular.module('taskService', [])
 // each function returns a promise object
     .factory('Tasks', ['$http', function ($http) {
         return {
-            get: function () {
-                return $http.get('/api/tasks');
+            create: function (task) {
+                return $http.post('/api/tasks', task);
             },
-            create: function (todoData) {
-                return $http.post('/api/tasks', todoData);
-            },
-            delete: function (id) {
-                return $http.delete('/api/tasks/' + id);
+            delete: function (id, categoryId) {
+                return $http.delete('/api/tasks/' + categoryId+"/"+id);
             }
         }
     }]);
