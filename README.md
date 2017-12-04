@@ -25,3 +25,6 @@ Following are the use case covered by the app:
 3. Place your own MongoDB URI in `config/database.js`
 3. Start the server: `node server.js`
 4. View in browser at `http://localhost:8080`
+
+## Running App on Heroku
+https://intense-escarpment-56877.herokuapp.com/#!/
