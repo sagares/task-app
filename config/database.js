@@ -1,5 +1,5 @@
 module.exports = {
-    remoteUrl : 'mongodb://node:nodeuser@mongo.onmodulus.net:27017/uwO3mypu',
+    remoteUrl : 'mongodb://sagares:S@ntosh1989@ds129936.mlab.com:29936/tasksapp',
     localUrl: 'mongodb://localhost/tasksapp',
     secret: 'h@rd2Crack'
 };
